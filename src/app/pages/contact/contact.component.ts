@@ -74,7 +74,6 @@ export class ContactComponent implements OnInit {
     this.addressInput = this.dataSourceFiltered?.[0].address;
     this.cityInput = this.dataSourceFiltered?.[0].city;
 
-
     selectedItem.value.id = this.dataSourceFiltered?.[0].id;
     this.apiService.updateContact(selectedItem.value).subscribe((result)=>{
       console.log(result);
