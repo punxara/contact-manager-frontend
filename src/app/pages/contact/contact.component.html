@@ -21,7 +21,7 @@
       <td>{{data.address ? data.address : ''}}</td>
       <td>{{data.city ? data.city : ''}}</td>
       <td>
-        <a (click)="updateContact(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <a (click)="setFormDefaultValues(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="deleteContact(data.id)" style="color: crimson"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
       </td>
@@ -69,7 +69,8 @@
   <nz-row>
     <nz-form-item>
       <nz-form-control>
-        <button type="submit" nz-button nzType="primary" nzSize="large">Save</button>
+        <button *ngIf="isEdit===false" type="submit" nz-button nzType="primary" nzSize="large">Save</button>
+        <button *ngIf="isEdit===true" type="submit" nz-button nzType="primary" nzSize="large" (click)="updateContact(contactForm)">Update</button>
       </nz-form-control>
     </nz-form-item>
   </nz-row>

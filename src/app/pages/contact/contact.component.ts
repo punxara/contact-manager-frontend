@@ -42,7 +42,9 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  setFormDefaultValues() {
+  setFormDefaultValues(selectedItem: Contact) {
+    this.contact = selectedItem;
+    this.isEdit = true;
     this.contactForm.setValue({
       name: this.contact ? this.contact.name : "",
       title: this.contact ? this.contact.title : "",
@@ -79,10 +81,8 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  updateContact(selectedItem: Contact) {
-    this.isEdit = true;
-    this.contact = selectedItem;
-    this.setFormDefaultValues();
+  updateContact(f: any) {
+    f.value.id = this.contact['id'];
     this.apiService.updateContact(this.contact).subscribe((result) => {
       console.log(result);
       console.log("id", this.contact.id);
