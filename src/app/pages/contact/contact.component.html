@@ -3,7 +3,6 @@
 <nz-table #editRowTable [nzData]="dataSource">
   <thead>
   <tr>
-    <th>No.</th>
     <th>Name</th>
     <th>Title</th>
     <th>Email</th>
@@ -15,7 +14,6 @@
   </thead>
   <tbody>
   <tr *ngFor="let data of editRowTable.data">
-      <td>{{data.id ? data.id : ''}}</td>
       <td>{{data.name ? data.name : ''}}</td>
       <td>{{data.title ? data.title : ''}}</td>
       <td>{{data.email ? data.email : ''}}</td>
@@ -39,32 +37,32 @@
   <nz-row [nzGutter]="24">
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="user">
-        <input nz-input type="text" id="name" name="name" formControlName="name" placeholder="Name" [(ngModel)]="nameInput" required>
+        <input nz-input type="text" id="name" name="name" formControlName="name" placeholder="Name" required>
       </nz-input-group>
     </nz-col>
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="contacts">
-        <input nz-input type="text" id="title" name="title" formControlName="title" placeholder="Title" [(ngModel)]="titleInput" required>
+        <input nz-input type="text" id="title" name="title" formControlName="title" placeholder="Title" required>
       </nz-input-group>
     </nz-col>
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="mail">
-        <input nz-input type="text" id="email" name="email" formControlName="email" placeholder="E-mail" [(ngModel)]="emailInput" required>
+        <input nz-input type="email" id="email" name="email" formControlName="email" placeholder="E-mail" required>
       </nz-input-group>
     </nz-col>
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="phone">
-        <input nz-input type="text" id="phone" name="phone" formControlName="phone" placeholder="Phone" [(ngModel)]="phoneInput" required>
+        <input nz-input type="text" id="phone" name="phone" formControlName="phone" placeholder="Phone" required>
       </nz-input-group>
     </nz-col>
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="home">
-        <input nz-input type="text" id="address" name="address" formControlName="address" placeholder="Address" [(ngModel)]="addressInput" required>
+        <input nz-input type="text" id="address" name="address" formControlName="address" placeholder="Address" required>
       </nz-input-group>
     </nz-col>
     <nz-col [nzSpan]="12" style="padding-bottom: 10px">
       <nz-input-group nzPrefixIcon="pushpin">
-        <input nz-input type="text" id="city" name="city" formControlName="city" placeholder="City" [(ngModel)]="cityInput" required>
+        <input nz-input type="text" id="city" name="city" formControlName="city" placeholder="City" required>
       </nz-input-group>
     </nz-col>
   </nz-row>

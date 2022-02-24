@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ApiService } from "../../api.service";
 import { Contact } from "../../contact";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-contact",
@@ -14,27 +14,14 @@ export class ContactComponent implements OnInit {
   // @ts-ignore
   contact: Contact = null;
   dataSource: Contact[] = [];
-  dataSourceFiltered: Contact[] = [];
-
-  contactForm = new FormGroup({
-    name: new FormControl(),
-    title: new FormControl(),
-    email: new FormControl(),
-    phone: new FormControl(),
-    address: new FormControl(),
-    city: new FormControl()
-  });
-
-  nameInput: string | undefined = '';
-  titleInput: string | undefined = '';
-  emailInput: string | undefined = '';
-  phoneInput: string | undefined = '';
-  addressInput: string | undefined = '';
-  cityInput: string | undefined = '';
+  contactForm: FormGroup;
+  isEdit: boolean = false;
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private formBuilder: FormBuilder
   ) {
+    this.initForm();
   }
 
   ngOnInit(): void {
@@ -42,6 +29,39 @@ export class ContactComponent implements OnInit {
       // @ts-ignore
       this.dataSource = result;
     });
+  }
+
+  initForm() {
+    this.contactForm = this.formBuilder.group({
+      name: ["", [Validators.required]],
+      title: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      phone: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      city: ["", [Validators.required]]
+    });
+  }
+
+  setFormDefaultValues() {
+    this.contactForm.setValue({
+      name: this.contact ? this.contact.name : "",
+      title: this.contact ? this.contact.title : "",
+      email: this.contact ? this.contact.email : "",
+      phone: this.contact ? this.contact.phone : "",
+      address: this.contact ? this.contact.address : "",
+      city: this.contact ? this.contact.city : ""
+    });
+
+    if (this.isEdit) {
+      this.contactForm.controls["email"].disable();
+      this.contactForm.controls["email"].reset(this.contact.email);
+    } else {
+      this.contactForm.controls["name"].enable();
+      this.contactForm.controls["title"].enable();
+      this.contactForm.controls["phone"].enable();
+      this.contactForm.controls["address"].enable();
+      this.contactForm.controls["city"].enable();
+    }
   }
 
   createContact(f: any) {
@@ -59,24 +79,13 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  getContactById(id: number){
-    this.dataSourceFiltered = this.dataSource.filter(x => {
-      return x.id === id
-    });
-  }
-
-  updateContact(selectedItem: any) {
-    this.getContactById(selectedItem.id)
-    this.nameInput = this.dataSourceFiltered?.[0].name;
-    this.titleInput = this.dataSourceFiltered?.[0].title;
-    this.emailInput = this.dataSourceFiltered?.[0].email;
-    this.phoneInput = this.dataSourceFiltered?.[0].phone;
-    this.addressInput = this.dataSourceFiltered?.[0].address;
-    this.cityInput = this.dataSourceFiltered?.[0].city;
-
-    selectedItem.value.id = this.dataSourceFiltered?.[0].id;
-    this.apiService.updateContact(selectedItem.value).subscribe((result)=>{
+  updateContact(selectedItem: Contact) {
+    this.isEdit = true;
+    this.contact = selectedItem;
+    this.setFormDefaultValues();
+    this.apiService.updateContact(this.contact).subscribe((result) => {
       console.log(result);
+      console.log("id", this.contact.id);
     });
   }
 }

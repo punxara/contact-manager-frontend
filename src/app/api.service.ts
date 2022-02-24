@@ -17,14 +17,14 @@ export class ApiService {
   }
 
   public createContact(contact: Contact){
-    return this.httpClient.post<Contact>(`${this.API_SERVER}/contact/create`, contact);
+    return this.httpClient.post<Contact>(`${this.API_SERVER}/contact`, contact);
   }
 
   public updateContact(contact: Contact){
-    return this.httpClient.put<Contact>(`${this.API_SERVER}/contact/${contact.id}/update`, contact);
+    return this.httpClient.put<Contact>(`${this.API_SERVER}/contact/${contact.id}`, contact);
   }
 
   public deleteContact(id: number){
-    return this.httpClient.delete(`${this.API_SERVER}/contact/${id}/delete`);
+    return this.httpClient.delete(`${this.API_SERVER}/contact/${id}`);
   }
 }
