@@ -88,4 +88,9 @@ export class ContactComponent implements OnInit {
       console.log("id", this.contact.id);
     });
   }
+
+  resetForm(){
+    this.contactForm.reset();
+    window.location.reload();
+  }
 }
